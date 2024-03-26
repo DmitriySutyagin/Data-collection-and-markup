@@ -10,6 +10,7 @@ price =[]
 availability = []
 descriptions = []
 count = 0
+num = 0
 
 
 
@@ -19,12 +20,12 @@ headers = {"User-Agents": ua.random}
 
 endpoint = 'http://books.toscrape.com/'
 
+global_block = {}
+
 while True:
 
     count += 1
     print(f'Этап номер: {count}')
-    
-
     
     respons = requests.get(endpoint, headers=headers)
 
@@ -49,17 +50,19 @@ while True:
         else:
             endpoint = 'http://books.toscrape.com/'
             url_joined.append(endpoint + link)
-        
+    
     for i in url_joined:
+
+        num += 1
   
         response = requests.get(i)
         soup_2 = BeautifulSoup(response.content, 'html.parser')
+        block_book = {}
 
         try:
             soup_name = soup_2.find('h1').text
-
             name.append(soup_name)
-        
+            block_book['Name'] = soup_name
         except:
             print('Отсутствует название книги')
 
@@ -67,13 +70,16 @@ while True:
             soup_price = soup_2.find('p', ('class', 'price_color')).text
             soup_price = float(re.sub(r'[^\d.]', '', soup_price))
             price.append(soup_price)
-    
+            block_book['Price'] = soup_price
         except:
             print('Цена товара отсутствует')
+
         try:
             soup_availability = soup_2.find('p', ('class', 'instock availability')).text
             soup_availability = int(re.sub(r'[^\d.]', '', soup_availability))
             availability.append(soup_availability)
+            block_book['Availability'] = soup_availability
+
         except:
             print('Отсутствуют данные о наличии')
 
@@ -82,11 +88,12 @@ while True:
             for i in soup_descriptions:
                 if len(i.get_text(strip=True)) >30:
                     descriptions.append(i.get_text(strip=True))
+                    block_book['Description'] = i.get_text(strip=True)
         except:
             print('Описание остутствует')
 
-    output = {'Name' : name, 'Price': price, "Availabiliry" : availability, 'Descriptions' : descriptions}
-
+        exp = f'id: {num}'
+        global_block[f'{exp}'] = block_book
 
 
     if not next_page:
@@ -105,4 +112,4 @@ while True:
 
 
 with open('Lesson_2.json','w',encoding='utf-8') as f:
-   json_file = json.dump(output, f, ensure_ascii=False,indent=2)
+   json_file = json.dump(global_block, f, ensure_ascii=False,indent=2)
