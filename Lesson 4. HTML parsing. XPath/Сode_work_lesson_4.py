@@ -1,6 +1,7 @@
 import requests
 from lxml import html, etree
 from pymongo import MongoClient
+import csv
 
 
 def insert_to_db(list_movies):
@@ -86,4 +87,11 @@ for link_vacan in list_block:
         
     db_parsing.append(dict_parsing)
     
+    
 insert_to_db(db_parsing)
+
+
+with open('csv_file.csv', 'w', encoding='utf-8') as c:
+    csv_file = csv.DictWriter(c,  fieldnames=db_parsing[0].keys())
+    csv_file.writeheader()
+    csv_file.writerows(db_parsing)
