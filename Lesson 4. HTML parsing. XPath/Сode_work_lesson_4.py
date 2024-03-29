@@ -95,3 +95,6 @@ with open('csv_file.csv', 'w', encoding='utf-8') as c:
     csv_file = csv.DictWriter(c,  fieldnames=db_parsing[0].keys())
     csv_file.writeheader()
     csv_file.writerows(db_parsing)
+    
+    
+# Conclusion: In vacancies where there is no data. Not a standard ad structure.
