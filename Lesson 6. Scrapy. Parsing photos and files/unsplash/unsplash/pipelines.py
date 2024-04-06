@@ -10,10 +10,19 @@ from scrapy.pipelines.images import ImagesPipeline
 import hashlib
 
 
-class CustomImagesPipeline(ImagesPipeline):
+class CustomImagesPipeline():
     
     def file_path(self, request, response=None, info=None, *, item=None):
-        image_guid = (hashlib.sha1(request.url.encode()).hexdigest())
-        # print(f"{item['name']}-{image_guid}.jpg")
-        return f"{item['name']}-{image_guid}.jpg"
+        # print(f'{response.url= }')
+        image_guid =[hashlib.sha1(request.url.encode()).hexdigest()]
+        print({item['name']}+{image_guid})
+        return f"{item['name']}-{image_guid}.avif"
+        # return item
+    
+    
+    
+    
+
+
+
 

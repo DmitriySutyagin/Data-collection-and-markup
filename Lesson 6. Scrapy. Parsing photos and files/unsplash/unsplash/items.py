@@ -5,11 +5,9 @@
 
 import scrapy
 
-
-
 class UnsplashItem(scrapy.Item):
     # define the fields for your item here like:
+    image_urls = scrapy.Field()
     name = scrapy.Field()
     category = scrapy.Field()
-    image_urls = scrapy.Field()
     images = scrapy.Field()
