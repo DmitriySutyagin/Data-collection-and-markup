@@ -9,6 +9,9 @@ from itemadapter import ItemAdapter
 from scrapy.pipelines.images import ImagesPipeline
 import hashlib
 
+class ImagesPipeline:
+    def process_item(self, item, spider):
+        return item
 
 class CustomImagesPipeline():
     

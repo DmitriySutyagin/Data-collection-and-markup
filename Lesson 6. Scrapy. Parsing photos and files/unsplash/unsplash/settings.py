@@ -64,11 +64,11 @@ DOWNLOAD_DELAY = 3
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   # "scrapy.pipelines.images.ImagesPipeline": 1,
+   "scrapy.pipelines.images.ImagesPipeline": 1,
    'unsplash.pipelines.CustomImagesPipeline' : 1
 }
 
-IMAGES_STORE = 'images_unsplash'
+IMAGES_STORE = r'./images_unsplash/'
 
 
 
